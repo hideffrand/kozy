@@ -1,0 +1,12 @@
+implement JWT in auth feature
+[GILBERT] create payment feature
+create maintanance feature
+
+NEXT: sabtu seharian (gilbert nyusul)-(igit nyusul)
+Book system, abis n
+
+Purchase Order: Purchase Order ID, Kamar ID, NIK Customer, Tanggal Masuk, Durasi Tingg\al, Via, Bukti
+Transaction: Transaction ID, NIK Customer, Outlet ID, Kamar ID, Biaya, Denda, Total
+
+kita hilang 1 manpower cok cuma bantu doa; 
+
