@@ -3,7 +3,7 @@ import { Typewriter } from "react-simple-typewriter";
 
 const TypingAnimation = () => {
   return (
-    <div className="text-5xl font-bold bg-gradient-to-r from-[#170439] via-[#853EF3] to-pink-500 bg-clip-text text-transparent">
+    <div className="text-5xl font-bold bg-gradient-to-r from-[#170439] via-[#853EF3] to-pink-600 bg-clip-text text-transparent">
       <Typewriter
         words={[
           "IBDA Kost.",

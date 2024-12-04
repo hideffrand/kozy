@@ -27,6 +27,46 @@ export default function Dashboard() {
     }
   }, [user?.role]);
 
+  const [bookings, setBookings] = useState([]);
+  async function fetchBookings() {
+    const res = await fetch(
+      `${API_BASE_URL}/bookings?user_id=${user?.user_id}`
+    );
+    if (!res.ok) {
+      console.log(`Failed getting ${res?.booking_id}`);
+      return;
+    }
+    const parsed = await res.json();
+    console.log(parsed.data);
+    setBookings(parsed.data);
+  }
+
+  useEffect(() => {
+    if (user?.role == "customer") {
+      fetchBookings();
+    }
+  }, []);
+
+  function getNextPayment(last_payment) {
+    // Convert the last_payment string into a Date object
+    const lastPaymentDate = new Date(last_payment);
+
+    // Add 30 days to the last payment date
+    const nextPaymentDate = new Date(lastPaymentDate);
+    nextPaymentDate.setDate(lastPaymentDate.getDate() + 30);
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the difference in time (in milliseconds)
+    const timeDiff = nextPaymentDate - currentDate;
+
+    // Convert milliseconds to days
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return `${daysLeft} days left`;
+  }
+
   return (
     <DashboardLayout>
       <div className="container mx-auto p-8">
@@ -71,18 +111,23 @@ export default function Dashboard() {
           {/* Outlet Info Section */}
           <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
             <h2 className="text-2xl font-semibold text-gray-700 flex items-center mb-4">
-              <FaBuilding className="text-purple-600 mr-2" /> Outlet Information
+              <FaListAlt className="text-purple-600 mr-2" /> Your Next Payment
             </h2>
-            <div className="space-y-4 text-gray-700">
-              <p>
-                <strong>Outlet Name:</strong> {user?.outlet_name || "N/A"}
-              </p>
-              <p>
-                <strong>Location:</strong>{" "}
-                {user?.outlet_location || "Not Provided"}
-              </p>
-              {/* Add any other relevant outlet info here */}
-            </div>
+            {bookings?.map((t, i) => (
+              <div
+                key={i}
+                className="bg-blue-200 shadow-md rounded-lg p-4 border border-gray-200 text-center"
+              >
+                <div className="flex items-center justify-center mb-3">
+                  <h2 className="text-lg font-bold text-blue-800">
+                    {user?.room_id}
+                  </h2>
+                </div>
+                <p className="text-blue-800 text-lg font-medium">
+                  {getNextPayment(t.last_payment)}
+                </p>
+              </div>
+            ))}
           </div>
 
           {/* Role/Permissions Section */}

@@ -109,14 +109,18 @@ const Outlet = () => {
             <h2 className="text-2xl font-bold mb-4">Available Rooms</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {rooms
-                .filter((room) => room.availability_status)
+                // .filter((room) => room.availability_status)
                 .map((room) => (
                   <div
                     key={room.room_id}
-                    className="border rounded-lg shadow-md bg-white cursor-pointer relative overflow-hidden"
+                    className={`border rounded-lg shadow-md bg-white cursor-pointer relative overflow-hidden ${
+                      room.availability_status ? "opacity-100" : "opacity-20"
+                    }`}
                     onClick={() => {
-                      setRoomId(room.room_id);
-                      setIsOpen(true);
+                      if (room.availability_status) {
+                        setRoomId(room.room_id);
+                        setIsOpen(true);
+                      }
                     }}
                   >
                     <div className="py-2 px-4 absolute bg-gray-100">
