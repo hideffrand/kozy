@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="w-full px-[14%] py-10 mt-10 bg-blue-100 flex justify-center">
       <div className="w-full max-w-screen-xl text-center space-y-6">
         {/* Footer Title */}
-        <h4 className="text-xl font-semibold text-purple-700">IBDA Kost</h4>
+        <h4 className="text-xl font-semibold text-purple-700">Kozy</h4>
 
         {/* Links Section */}
         <div className="text-lg text-gray-700">
@@ -45,8 +45,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="text-sm text-gray-500 mt-4">
           <p>
-            &copy; {new Date().getFullYear()} IBDA Kost. Semua hak cipta
-            dilindungi.
+            &copy; {new Date().getFullYear()} Kozy. Semua hak cipta dilindungi.
           </p>
         </div>
       </div>

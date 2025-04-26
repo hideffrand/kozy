@@ -49,7 +49,7 @@ def get_all_transactions():
     #                     ts["penalty"] = penalty
     #                 else:
     #                     log(here,
-    #                         f"Missing cost for transaction {ts['booking_id']}, skipping penalty.")
+    #                         f"Missing cost for transaction {ts['booking_id']}, skipping penalty."
     #                     ts["penalty"] = 0
     #             else:
     #                 ts["penalty"] = 0

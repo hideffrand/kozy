@@ -48,7 +48,14 @@ export default function Bookings() {
     }
   }, []);
 
-  const handleAccept = async (bookingId, userId, outletId, roomId, start, duration) => {
+  const handleAccept = async (
+    bookingId,
+    userId,
+    outletId,
+    roomId,
+    start,
+    duration
+  ) => {
     try {
       const acceptRes = await fetch(`${API_BASE_URL}/bookings/`, {
         method: "PUT",
@@ -80,7 +87,7 @@ export default function Bookings() {
           room_id: roomId,
           penalty: 0,
           paid_at: null,
-          due_date: dueDate
+          due_date: dueDate,
         }),
       });
 
@@ -162,7 +169,7 @@ export default function Bookings() {
 
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text("IBDA Kost", 10, 10);
+    doc.text("Kozy", 10, 10);
 
     doc.html(tableRef.current, {
       margin: [2, 2, 2, 2],

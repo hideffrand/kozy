@@ -1,4 +1,8 @@
 __pycache__/
+venv/
 *.pyc
 *.pyo
 .env
+.vercel
+log/
+.env*.local

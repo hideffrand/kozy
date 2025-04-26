@@ -1,8 +1,26 @@
-from model import Booking, db
+from model import Booking, db, Room, User
 from helper.logger import log
 from helper.id_generator import generate_id
 import os
 here = os.path.basename(__file__)
+
+
+def cancel_booking_after_4_days(booking_id):
+    booking = Booking.query.filter_by(booking_id=booking_id).first()
+    if not booking:
+        return False
+    booking_json = booking.to_json()
+
+    user = User.query.filter_by(user_id=booking_json["user_id"]).first()
+    room = Room.query.filter_by(room_id=booking_json["room_id"]).first()
+
+    user.room_number = None
+    user.outlet_id = None
+    room.availability_status = False
+    booking.accepted = False
+    db.session.commit()
+
+    return True
 
 
 def get_booking_data(booking_id):
@@ -25,7 +43,6 @@ def get_user_booking(user_id):
     if not bookings:
         log(here, 'Failed getting booking datas.')
         return False
-
 
     return [booking.to_json() for booking in bookings]
 

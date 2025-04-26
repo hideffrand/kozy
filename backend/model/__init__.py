@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    __tablename__ = "user"
+    __tablename__ = "kozy_user"
 
     user_id = db.Column('user_id', db.String(10), primary_key=True)
     email = db.Column('email', db.String(150), unique=True, nullable=False)
@@ -14,7 +14,7 @@ class User(db.Model):
     role = db.Column('role', db.String(50))
     photo = db.Column('photo', db.String(255))
     outlet_id = db.Column('outlet_id', db.String(
-        10), db.ForeignKey('outlet.outlet_id'))
+        10), db.ForeignKey('kozy_outlet.outlet_id'))
     room_number = db.Column('room_number', db.Integer)
 
     # __mapper_args__ = {
@@ -47,8 +47,52 @@ class User(db.Model):
         }
 
 
+class Type(db.Model):
+    __tablename__ = "kozy_type"
+
+    type_id = db.Column('type_id', db.String(10), primary_key=True)
+    type_name = db.Column('type_name', db.String(50))
+    bathroom = db.Column('bathroom', db.Boolean)
+    ac = db.Column('ac', db.Boolean)
+    tv = db.Column('tv', db.Boolean)
+    wifi_speed = db.Column('wifi_speed', db.Integer)
+    mini_pantry = db.Column('mini_pantry', db.Boolean)
+    dispenser = db.Column('dispenser', db.Boolean)
+    fridge = db.Column('fridge', db.Boolean)
+    size = db.Column('size', db.String(50))
+    price = db.Column('price', db.Integer)
+
+    def __init__(self, type_id, type_name, bathroom, ac, tv, wifi_speed, mini_pantry, dispenser, fridge, size, price):
+        self.type_id = type_id
+        self.type_name = type_name
+        self.bathroom = bathroom
+        self.ac = ac
+        self.tv = tv
+        self.wifi_speed = wifi_speed
+        self.mini_pantry = mini_pantry
+        self.dispenser = dispenser
+        self.fridge = fridge
+        self.size = size
+        self.price = price
+
+    def to_json(self):
+        return {
+            "type_id": self.type_id,
+            "type_name": self.type_name,
+            "bathroom": self.bathroom,
+            "ac": self.ac,
+            "tv": self.tv,
+            "wifi_speed": self.wifi_speed,
+            "mini_pantry": self.mini_pantry,
+            "dispenser": self.dispenser,
+            "fridge": self.fridge,
+            "size": self.size,
+            "price": self.price
+        }
+
+
 class Outlet(db.Model):
-    __tablename__ = "outlet"
+    __tablename__ = "kozy_outlet"
 
     outlet_id = db.Column('outlet_id', db.String(10), primary_key=True)
     name = db.Column('name', db.String(100))
@@ -56,7 +100,7 @@ class Outlet(db.Model):
     city = db.Column('city', db.String(100))
     phone = db.Column('phone', db.String(15))
     photo = db.Column('photo', db.String(255))
-    spv_id = db.Column('spv_id', db.String(10), db.ForeignKey('user.user_id'))
+    spv_id = db.Column('spv_id', db.String(10), db.ForeignKey('kozy_user.user_id'))
     motorcycle_slot = db.Column('motorcycle_slot', db.Integer)
     car_slot = db.Column('car_slot', db.Integer)
 
@@ -86,14 +130,14 @@ class Outlet(db.Model):
 
 
 class Room(db.Model):
-    __tablename__ = "room"
+    __tablename__ = "kozy_room"
 
     room_id = db.Column('room_id', db.String(10), primary_key=True)
     room_number = db.Column('room_number', db.Integer)
     type_id = db.Column('type_id', db.String(
-        10), db.ForeignKey('type.type_id'))
+        10), db.ForeignKey('kozy_type.type_id'))
     outlet_id = db.Column('outlet_id', db.String(
-        10), db.ForeignKey('outlet.outlet_id'))
+        10), db.ForeignKey('kozy_outlet.outlet_id'))
     photo = db.Column('photo', db.String(255))
     availability_status = db.Column('availability_status', db.Boolean)
 
@@ -117,16 +161,15 @@ class Room(db.Model):
 
 
 class Maintenance(db.Model):
-    __tablename__ = "maintenance"
+    __tablename__ = "kozy_maintenance"
 
     maintenance_id = db.Column(
         'maintenance_id', db.String(10), primary_key=True)
     outlet_id = db.Column('outlet_id', db.String(10),
-                          db.ForeignKey('outlet.outlet_id'))
-    room_number = db.Column('room_number', db.Integer,
-                            db.ForeignKey('room.room_number'))
+                          db.ForeignKey('kozy_outlet.outlet_id'))
+    room_number = db.Column('room_number', db.Integer)
     user_id = db.Column('user_id', db.String(
-        10), db.ForeignKey('user.user_id'))
+        10), db.ForeignKey('kozy_user.user_id'))
     issue = db.Column('issue', db.String(255))
     date_reported = db.Column('date_reported', db.Date)
     status = db.Column('status', db.String(50))
@@ -156,7 +199,7 @@ class Maintenance(db.Model):
 
 
 class Payment(db.Model):
-    __tablename__ = "payment"
+    __tablename__ = "kozy_payment"
 
     payment_id = db.Column('payment_id', db.String(10), primary_key=True)
     timestamp = db.Column('timestamp', db.Date)
@@ -198,60 +241,16 @@ class Payment(db.Model):
         }
 
 
-class Type(db.Model):
-    __tablename__ = "type"
-
-    type_id = db.Column('type_id', db.String(10), primary_key=True)
-    type_name = db.Column('type_name', db.String(50), primary_key=True)
-    bathroom = db.Column('bathroom', db.Boolean)
-    ac = db.Column('ac', db.Boolean)
-    tv = db.Column('tv', db.Boolean)
-    wifi_speed = db.Column('wifi_speed', db.Integer)
-    mini_pantry = db.Column('mini_pantry', db.Boolean)
-    dispenser = db.Column('dispenser', db.Boolean)
-    fridge = db.Column('fridge', db.Boolean)
-    size = db.Column('size', db.String(50))
-    price = db.Column('price', db.Integer)
-
-    def __init__(self, type_id, type_name, bathroom, ac, tv, wifi_speed, mini_pantry, dispenser, fridge, size, price):
-        self.type_id = type_id
-        self.type_name = type_name
-        self.bathroom = bathroom
-        self.ac = ac
-        self.tv = tv
-        self.wifi_speed = wifi_speed
-        self.mini_pantry = mini_pantry
-        self.dispenser = dispenser
-        self.fridge = fridge
-        self.size = size
-        self.price = price
-
-    def to_json(self):
-        return {
-            "type_id": self.type_id,
-            "type_name": self.type_name,
-            "bathroom": self.bathroom,
-            "ac": self.ac,
-            "tv": self.tv,
-            "wifi_speed": self.wifi_speed,
-            "mini_pantry": self.mini_pantry,
-            "dispenser": self.dispenser,
-            "fridge": self.fridge,
-            "size": self.size,
-            "price": self.price
-        }
-
-
 class Booking(db.Model):
-    __tablename__ = "booking"
+    __tablename__ = "kozy_booking"
 
     booking_id = db.Column('booking_id', db.String(10), primary_key=True)
     room_id = db.Column('room_id', db.String(
-        10), db.ForeignKey('room.room_id'))
+        10), db.ForeignKey('kozy_room.room_id'))
     outlet_id = db.Column('outlet_id', db.String(
-        10), db.ForeignKey('outlet.outlet_id'))
+        10), db.ForeignKey('kozy_outlet.outlet_id'))
     user_id = db.Column('user_id', db.String(
-        10), db.ForeignKey('user.user_id'))
+        10), db.ForeignKey('kozy_user.user_id'))
     check_in_date = db.Column('check_in_date', db.Date)
     stay_duration = db.Column('stay_duration', db.Integer)
     accepted = db.Column('accepted', db.Boolean)
@@ -281,18 +280,18 @@ class Booking(db.Model):
 
 
 class Transaction(db.Model):
-    __tablename__ = "transaction"
+    __tablename__ = "kozy_transaction"
 
     transaction_id = db.Column(
         'transaction_id', db.String(10), primary_key=True)
     user_id = db.Column('user_id', db.String(
-        10), db.ForeignKey('user.user_id'))
+        10), db.ForeignKey('kozy_user.user_id'))
     outlet_id = db.Column('outlet_id', db.String(
-        10), db.ForeignKey('outlet.outlet_id'))
+        10), db.ForeignKey('kozy_outlet.outlet_id'))
     room_id = db.Column('room_id', db.String(
-        10), db.ForeignKey('room.room_id'))
+        10), db.ForeignKey('kozy_room.room_id'))
     booking_id = db.Column('booking_id', db.String(
-        10), db.ForeignKey('booking.booking_id'))
+        10), db.ForeignKey('kozy_booking.booking_id'))
     cost = db.Column('cost', db.Float)
     penalty = db.Column('penalty', db.Float)
     total = db.Column('total', db.Float)
@@ -324,43 +323,3 @@ class Transaction(db.Model):
             "paid_at": self.paid_at,
             "due_date": self.due_date
         }
-
-
-# class Customer(User):
-#     __mapper_args__ = {
-#         'polymorphic_identity': 'customer'
-#     }
-
-#     outlet_id = db.Column('outlet_id', db.String(10), db.ForeignKey('outlet.outlet_id'))
-#     room_id = db.Column('room_id', db.Integer, db.ForeignKey('room.room_id'))
-#     photo = db.Column('photo', db.LargeBinary)
-
-#     def __init__(self, email, password, name, address, outlet_id, photo):
-#         super().__init__(email, password, name, address)
-#         self.outlet_id = outlet_id
-#         self.photo = photo
-
-
-# class SPV(User):
-#     __mapper_args__ = {
-#         'polymorphic_identity': 'spv'
-#     }
-
-#     outlet_id = db.Column('outlet_id', db.String(10), db.ForeignKey('outlet.outlet_id'))
-#     photo = db.Column('photo', db.LargeBinary)
-#     phone = db.Column('phone', db.String(15))
-
-#     def __init__(self, email, password, name, address, outlet_id, photo, phone):
-#         super().__init__(email, password, name, address)
-#         self.outlet_id = outlet_id
-#         self.photo = photo
-#         self.phone = phone
-
-
-# class Owner(User):
-#     __mapper_args__ = {
-#         'polymorphic_identity': 'owner'
-#     }
-
-#     def __init__(self, email, password, name, address):
-#         super().__init__(email, password, name, address)

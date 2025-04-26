@@ -17,7 +17,7 @@ import Customer from "./pages/dashboard/customer";
 import RoomBooking from "./pages/booking";
 import Bookings from "./pages/dashboard/bookings";
 import Maintenance from "./pages/dashboard/maintenance";
-import Users from "./pages/dashboard/Users";
+import Users from "./pages/dashboard/users";
 import Transactions from "./pages/dashboard/transactions";
 import TNC from "./pages/tnc";
 

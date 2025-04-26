@@ -28,7 +28,7 @@ const Home = () => {
           alt=""
         />
         <div className="absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <TypingAnimation />
+          <TypingAnimation />
         </div>
       </section>
       <section className="px-[5%] md:px-[14%] w-full -translate-y-40">
@@ -83,7 +83,7 @@ const Home = () => {
       {/* <section className="h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center max-w-5xl px-6">
           <h2 className="text-4xl font-bold text-purple-700 mb-6">
-            Mengapa Memilih IBDA Kost?
+            Mengapa Memilih Kozy?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg">
@@ -136,7 +136,7 @@ const Home = () => {
         <div className="max-w-4xl px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg">
             <p className="italic">
-              "IBDA Kost sangat membantu saya mengelola pembayaran bulanan dan
+              "Kozy sangat membantu saya mengelola pembayaran bulanan dan
               memantau ketersediaan kamar. Semuanya jadi jauh lebih efisien!"
             </p>
             <p className="text-yellow-300 font-semibold mt-4">
@@ -146,7 +146,7 @@ const Home = () => {
           <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg">
             <p className="italic">
               "Sebagai penghuni kost, saya sangat terbantu dengan transparansi
-              laporan dan kemudahan pembayaran melalui IBDA Kost."
+              laporan dan kemudahan pembayaran melalui Kozy."
             </p>
             <p className="text-yellow-300 font-semibold mt-4">
               - Siti, Penghuni Kost
@@ -162,7 +162,7 @@ const Home = () => {
             Siap untuk Mulai?
           </h2>
           <p className="text-lg text-gray-700 mb-6">
-            Kelola kost Anda dengan mudah dan efisien bersama IBDA Kost. Klik
+            Kelola kost Anda dengan mudah dan efisien bersama Kozy. Klik
             tombol di bawah untuk menjelajahi lokasi kost yang tersedia!
           </p>
           <a

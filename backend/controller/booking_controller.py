@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask_cors import cross_origin
 from helper.response import send_response
 from helper.http_status_code import http_internal_server_error, http_ok, http_bad_request, http_method_not_allowed
-from service.booking_service import get_user_booking, get_outlet_booking, get_all_bookings, update_booking_data, add_new_booking
+from service.booking_service import get_user_booking, get_outlet_booking, get_all_bookings, update_booking_data, add_new_booking, cancel_booking_after_4_days
 from helper.http_status_code import http_not_found
 bookings = Blueprint('bookings', __name__)
 
@@ -23,6 +23,17 @@ def get_bookings():
 
     return send_response(http_ok, data)
 
+
+@bookings.route("/cancel/<string:booking_id>", methods=["GET"])
+def cancel_booking_all(booking_id):
+    if not booking_id:
+        return send_response(http_bad_request)
+
+    res = cancel_booking_after_4_days(booking_id)
+    if not res:
+        return send_response(http_internal_server_error)
+
+    return send_response(http_ok)
 
 # @bookings.route("/<string:id>", methods=["GET"])
 # def get_one_bookings(id):

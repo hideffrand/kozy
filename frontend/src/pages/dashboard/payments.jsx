@@ -37,7 +37,7 @@ export default function Payments() {
 
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text("IBDA Kost", 10, 10);
+    doc.text("Kozy", 10, 10);
 
     doc.html(tableRef.current, {
       margin: [2, 2, 2, 2],

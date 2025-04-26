@@ -100,7 +100,7 @@ export default function Transactions() {
 
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text("IBDA Kost", 10, 10);
+    doc.text("Kozy", 10, 10);
 
     doc.html(tableRef.current, {
       margin: [2, 2, 2, 2],
@@ -147,7 +147,9 @@ export default function Transactions() {
         >
           <thead>
             <tr className="bg-purple-700 text-white">
-              <th className="py-3 px-4 font-semibold text-sm">Transaction ID</th>
+              <th className="py-3 px-4 font-semibold text-sm">
+                Transaction ID
+              </th>
               <th className="py-3 px-4 font-semibold text-sm">User ID</th>
               <th className="py-3 px-4 font-semibold text-sm">Outlet ID</th>
               <th className="py-3 px-4 font-semibold text-sm">Room ID</th>
@@ -157,7 +159,7 @@ export default function Transactions() {
               <th className="py-3 px-4 font-semibold text-sm">Paid At</th>
               <th className="py-3 px-4 font-semibold text-sm">Status</th>
               <th className="py-3 px-4 font-semibold text-sm">Due Date</th>
-            
+
               {user?.role === "customer" && (
                 <th className="py-3 px-4 font-semibold text-sm">Actions</th>
               )}
@@ -202,7 +204,9 @@ export default function Transactions() {
                     {transaction.paid_at ? "Paid" : "Unpaid"}
                   </span>
                 </td>
-                <td className="py-3 px-4 text-gray-700">{transaction.due_date}</td>
+                <td className="py-3 px-4 text-gray-700">
+                  {transaction.due_date}
+                </td>
                 <td>
                   {user?.role === "customer" && !transaction.paid_at && (
                     <button

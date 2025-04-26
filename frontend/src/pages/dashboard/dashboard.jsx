@@ -47,24 +47,41 @@ export default function Dashboard() {
     }
   }, []);
 
-  function getNextPayment(last_payment) {
-    // Convert the last_payment string into a Date object
-    const lastPaymentDate = new Date(last_payment);
+  const [denda, setDenda] = useState("");
+  const [isAlerted, setIsAlerted] = useState(true);
 
-    // Add 30 days to the last payment date
+  function getNextPayment(last_payment, booking_id) {
+    const lastPaymentDate = new Date(last_payment);
     const nextPaymentDate = new Date(lastPaymentDate);
     nextPaymentDate.setDate(lastPaymentDate.getDate() + 30);
-
-    // Get the current date
     const currentDate = new Date();
-
-    // Calculate the difference in time (in milliseconds)
     const timeDiff = nextPaymentDate - currentDate;
 
-    // Convert milliseconds to days
     const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
+    // if (daysLeft == -5) {
+    //   handleCancelBookingAfter4Days(booking_id);
+    //   setIsAlerted(false);
+    //   // return;
+    // }
+    // if (daysLeft == -4) {
+    //   setDenda("Rp375.000");
+    // }
+    if (daysLeft < 0) {
+      // setDenda("Rp375.000");
+      return `You are ${Math.abs(daysLeft)} days late`;
+    }
     return `${daysLeft} days left`;
+  }
+
+  async function handleCancelBookingAfter4Days(booking_id) {
+    if (!isAlerted) {
+      const res = await fetch(`${API_BASE_URL}/bookings/cancel/${booking_id}`);
+      if (!res.ok) return;
+
+      alert("ANDA TELAT BAYAR 4 HARI");
+      setIsAlerted(false);
+      return;
+    }
   }
 
   return (
@@ -124,7 +141,14 @@ export default function Dashboard() {
                   </h2>
                 </div>
                 <p className="text-blue-800 text-lg font-medium">
-                  {getNextPayment(t.last_payment)}
+                  {getNextPayment(t.last_payment, t.booking_id)}
+                </p>
+                <br />
+                <p className="text-red-500">
+                  {getNextPayment(t.last_payment, t.booking_id) ==
+                  "You are 4 days late"
+                    ? "Denda: Rp375.000"
+                    : ""}
                 </p>
               </div>
             ))}
